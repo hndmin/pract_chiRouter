@@ -31,7 +31,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// Send a response back to the client
 	fmt.Fprintf(w, "Requested URL: %s", requestedURL)
 
-	paramArr := [3]string{"/", "hello", "world"}
+	//paramArr := [3]string{"/", "hello", "world"}
 	for i := 0; i < 3; i++ {
 
 	}
@@ -42,24 +42,24 @@ func main() {
 	r := chi.NewRouter()
 	// 1 ////////////////////////////////////////////////////////////
 	r.Use(middleware.Logger)
-	// r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	w.Write([]byte("Hello World!!!!"))
-	// })
-	// r.Get("/hello", func(w http.ResponseWriter, r *http.Request) {
-	// 	w.Write([]byte("World!"))
-	// })
-	// r.Get("/world", func(w http.ResponseWriter, r *http.Request) {
-	// 	w.Write([]byte("Hello!"))
-	// })
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello World!!!!"))
+	})
+	r.Get("/hello", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("World!"))
+	})
+	r.Get("/world", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello!"))
+	})
 	// 2 ////////////////////////////////////////////////////////////
 
-	http.HandleFunc("/", handler)
+	//http.HandleFunc("/", handler)
 
 	//r.Get("/queryparam", checkURL)
 	//http.HandleFunc("/", handler)
 
 	//
-	http.ListenAndServe(":3000", nil)
+	http.ListenAndServe(":3000", r)
 
 	// fmt.Println("Hello, World!!")
 
