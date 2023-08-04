@@ -21,42 +21,45 @@ func checkURL(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	// Get the requested URL from the request
-	requestedURL := r.URL.String()
+func handleQueryParam(w http.ResponseWriter, r *http.Request) {
+	// Get a specific query parameter by name
+	paramValue := chi.URLParam(r, "paramName")
 
-	// Print the requested URL
-	fmt.Println("Requested URL:", requestedURL)
+	// Alternatively, you can use r.URL.Query() to get all query parameters as a map
+	queryParams := r.URL.Query()
+
+	// Print the specific query parameter value
+	fmt.Println("Query Parameter Value:", paramValue)
+
+	// Print all query parameters
+	fmt.Println("All Query Parameters:", queryParams)
 
 	// Send a response back to the client
-	fmt.Fprintf(w, "Requested URL: %s", requestedURL)
-
-	//paramArr := [3]string{"/", "hello", "world"}
-	for i := 0; i < 3; i++ {
-
-	}
-
+	fmt.Fprintf(w, "Query Parameter Value: %s\n", paramValue)
+	fmt.Fprintf(w, "All Query Parameters: %+v\n", queryParams)
 }
 
 func main() {
 	r := chi.NewRouter()
 	// 1 ////////////////////////////////////////////////////////////
 	r.Use(middleware.Logger)
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World!!!!"))
-	})
-	r.Get("/hello", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("World!"))
-	})
-	r.Get("/world", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello!"))
-	})
+	// r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	// 	w.Write([]byte("Hello World!!!!"))
+	// })
+	// r.Get("/hello", func(w http.ResponseWriter, r *http.Request) {
+	// 	w.Write([]byte("World!"))
+	// })
+	// r.Get("/world", func(w http.ResponseWriter, r *http.Request) {
+	// 	w.Write([]byte("Hello!"))
+	// })
 	// 2 ////////////////////////////////////////////////////////////
 
 	//http.HandleFunc("/", handler)
 
 	//r.Get("/queryparam", checkURL)
 	//http.HandleFunc("/", handler)
+
+	r.Get("/queryparam", handleQueryParam)
 
 	//
 	http.ListenAndServe(":3000", r)
