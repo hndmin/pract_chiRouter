@@ -37,6 +37,11 @@ func handleQueryParam(w http.ResponseWriter, r *http.Request) {
 	// Send a response back to the client
 	fmt.Fprintf(w, "Query Parameter Value: %s\n", paramValue)
 	fmt.Fprintf(w, "All Query Parameters: %+v\n", queryParams)
+
+	if queryParams[] == "hello" {
+		w.Write([]byte("World!"))
+	}
+
 }
 
 func main() {
@@ -52,11 +57,11 @@ func main() {
 	// r.Get("/world", func(w http.ResponseWriter, r *http.Request) {
 	// 	w.Write([]byte("Hello!"))
 	// })
-	// 2 ////////////////////////////////////////////////////////////
+	// // 2 ////////////////////////////////////////////////////////////
 
 	//http.HandleFunc("/", handler)
 
-	//r.Get("/queryparam", checkURL)
+	//r.Get("/queryparam", checkURL)git
 	//http.HandleFunc("/", handler)
 
 	r.Get("/queryparam", handleQueryParam)
